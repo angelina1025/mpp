@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數位名片分享中...</title>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            color: #555;
+        }
+        .loader {
+            text-align: center;
+        }
+    </script>
+</head>
+<body>
+    <div class="loader">
+        <p>正在啟動分享功能...</p>
+    </div>
+
+    <script>
+        async function main() {
+            try {
+                // 1. 初始化 LIFF
+                await liff.init({ liffId: "2009645313-UnbMhqtt" });
+
+                // 2. 判斷使用者是否登入
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    // 3. 檢查是否具備分享權限 (Share Target Picker)
+                    if (liff.isApiAvailable('shareTargetPicker')) {
+                        const result = await liff.shareTargetPicker([
+                            {
+                                "type": "flex",
+                                "altText": "您收到一張張盛傑的數位名片",
+                                "contents": {
+                                    "type": "bubble",
+                                    "size": "mega",
+                                    "hero": {
+                                        "type": "image",
+                                        "url": "https://i.imgur.com/uM9yYfE.png",
+                                        "size": "full",
+                                        "aspectRatio": "3:4",
+                                        "aspectMode": "cover"
+                                    },
+                                    "body": {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": "天揚有限公司 / 展盛工程行",
+                                                "weight": "bold",
+                                                "color": "#4A5EB3",
+                                                "size": "sm",
+                                                "align": "center"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "text": "張盛傑",
+                                                "weight": "bold",
+                                                "size": "xl",
+                                                "margin": "md",
+                                                "align": "center"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "text": "數位匠心木作，溝通造就工藝，成就非凡",
+                                                "size": "xxs",
+                                                "color": "#8C8C8C",
+                                                "align": "center",
+                                                "margin": "sm"
+                                            },
+                                            {
+                                                "type": "box",
+                                                "layout": "horizontal",
+                                                "margin": "lg",
+                                                "spacing": "sm",
+                                                "contents": [
+                                                    {
+                                                        "type": "box",
+                                                        "layout": "vertical",
+                                                        "contents": [{"type": "text", "text": "CNC 木工", "size": "xxs", "color": "#4A5EB3", "align": "center"}],
+                                                        "backgroundColor": "#E8EDFF",
+                                                        "cornerRadius": "xxl",
+                                                        "paddingAll": "4px",
+                                                        "flex": 1
+                                                    },
+                                                    {
+                                                        "type": "box",
+                                                        "layout": "vertical",
+                                                        "contents": [{"type": "text", "text": "LOGO 製作", "size": "xxs", "color": "#4A5EB3", "align": "center"}],
+                                                        "backgroundColor": "#E8EDFF",
+                                                        "cornerRadius": "xxl",
+                                                        "paddingAll": "4px",
+                                                        "flex": 1
+                                                    },
+                                                    {
+                                                        "type": "box",
+                                                        "layout": "vertical",
+                                                        "contents": [{"type": "text", "text": "鋼構平台", "size": "xxs", "color": "#4A5EB3", "align": "center"}],
+                                                        "backgroundColor": "#E8EDFF",
+                                                        "cornerRadius": "xxl",
+                                                        "paddingAll": "4px",
+                                                        "flex": 1
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "box",
+                                                "layout": "horizontal",
+                                                "margin": "sm",
+                                                "spacing": "sm",
+                                                "contents": [
+                                                    {
+                                                        "type": "box",
+                                                        "layout": "vertical",
+                                                        "contents": [{"type": "text", "text": "老屋翻修", "size": "xxs", "color": "#4A5EB3", "align": "center"}],
+                                                        "backgroundColor": "#E8EDFF",
+                                                        "cornerRadius": "xxl",
+                                                        "paddingAll": "4px",
+                                                        "flex": 1
+                                                    },
+                                                    {
+                                                        "type": "box",
+                                                        "layout": "vertical",
+                                                        "contents": [{"type": "text", "text": "統包工程", "size": "xxs", "color": "#4A5EB3", "align": "center"}],
+                                                        "backgroundColor": "#E8EDFF",
+                                                        "cornerRadius": "xxl",
+                                                        "paddingAll": "4px",
+                                                        "flex": 1
+                                                    }
+                                                ],
+                                                "paddingStart": "40px",
+                                                "paddingEnd": "40px"
+                                            },
+                                            {
+                                                "type": "separator",
+                                                "margin": "xl"
+                                            },
+                                            {
+                                                "type": "box",
+                                                "layout": "vertical",
+                                                "margin": "lg",
+                                                "spacing": "xs",
+                                                "contents": [
+                                                    { "type": "text", "text": "■ 聯繫資訊", "weight": "bold", "size": "xs" },
+                                                    { "type": "text", "text": "・電話：0938-368-711", "size": "xxs", "color": "#555555" },
+                                                    { "type": "text", "text": "・E-mail：cbambooc4530@gmail.com", "size": "xxs", "color": "#555555" },
+                                                    { "type": "text", "text": "■ BNI：高雄中心區富源分會", "size": "xxs", "color": "#555555" },
+                                                    { "type": "text", "text": "■ 代表性客戶", "size": "xxs", "color": "#555555" },
+                                                    { "type": "text", "text": "・好市多.漢神.大立百貨.迪卡儂.衛武營", "size": "xxs", "color": "#555555" }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "footer": {
+                                        "type": "box",
+                                        "layout": "horizontal",
+                                        "spacing": "sm",
+                                        "contents": [
+                                            { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "Line", "uri": "https://line.me/R/ti/p/@439roerh" } },
+                                            { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "介紹", "uri": "https://ty.ipe.tw/" } },
+                                            { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "分享", "uri": "https://liff.line.me/2009645313-UnbMhqtt" } }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]);
+
+                        if (result) {
+                            console.log("分享成功");
+                        } else {
+                            console.log("取消分享");
+                        }
+                    } else {
+                        alert("目前環境不支援分享功能，請從 LINE 內開啟。");
+                    }
+                    // 執行完畢後關閉視窗
+                    liff.closeWindow();
+                }
+            } catch (error) {
+                console.error("發生錯誤：", error);
+            }
+        }
+        main();
+    </script>
+</body>
+</html>
