@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>分享名片</title>
+    <title>分享張盛傑名片</title>
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f7ff; }
+        .loader { text-align: center; }
+    </style>
 </head>
 <body>
-    <h2 style="text-align: center; margin-top: 50px; font-family: sans-serif; color: #333;">正在開啟分享功能...</h2>
+    <div class="loader">
+        <h2 style="color: #4A5EB3;">正在開啟分享功能...</h2>
+        <p style="color: #888;">請稍候，即將彈出好友選單</p>
+    </div>
 
     <script>
         async function main() {
-            // 1. 初始化 LIFF
-            await liff.init({ liffId: "2009645313-UnbMhqtt" });
+            try {
+                // 1. 初始化 LIFF (使用你提供的正確 ID)
+                await liff.init({ liffId: "2009645313-k97GXGdW" });
 
-            // 2. 檢查是否登入
-            if (!liff.isLoggedIn()) {
-                liff.login();
-            } else {
-                // 3. 執行分享動作 (ShareTargetPicker)
-                if (liff.isApiAvailable('shareTargetPicker')) {
-                    try {
+                // 2. 檢查登入
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    // 3. 觸發分享選單
+                    if (liff.isApiAvailable('shareTargetPicker')) {
                         const result = await liff.shareTargetPicker([
                             {
                                 "type": "flex",
@@ -39,73 +46,22 @@
                                     "type": "box",
                                     "layout": "vertical",
                                     "contents": [
-                                      {
-                                        "type": "text",
-                                        "text": "天揚有限公司 / 展盛工程行",
-                                        "weight": "bold",
-                                        "color": "#4A5EB3",
-                                        "size": "sm",
-                                        "align": "center"
-                                      },
-                                      {
-                                        "type": "text",
-                                        "text": "張盛傑",
-                                        "weight": "bold",
-                                        "size": "xl",
-                                        "margin": "md",
-                                        "align": "center"
-                                      },
+                                      { "type": "text", "text": "天揚有限公司 / 展盛工程行", "weight": "bold", "color": "#4A5EB3", "size": "sm", "align": "center" },
+                                      { "type": "text", "text": "張盛傑", "weight": "bold", "size": "xl", "margin": "md", "align": "center" },
                                       {
                                         "type": "box",
                                         "layout": "vertical",
                                         "margin": "lg",
                                         "spacing": "sm",
                                         "contents": [
-                                          {
-                                            "type": "text",
-                                            "text": "■ 營運項目 (點擊查看詳情)",
-                                            "weight": "bold",
-                                            "size": "xs",
-                                            "margin": "md",
-                                            "color": "#333333"
-                                          },
+                                          { "type": "text", "text": "■ 營運項目 (點擊查看詳情)", "weight": "bold", "size": "xs", "color": "#333333" },
                                           {
                                             "type": "box",
                                             "layout": "horizontal",
                                             "spacing": "sm",
                                             "contents": [
-                                              {
-                                                "type": "box",
-                                                "layout": "vertical",
-                                                "flex": 1,
-                                                "backgroundColor": "#F4F7FF",
-                                                "cornerRadius": "md",
-                                                "paddingAll": "10px",
-                                                "action": {
-                                                  "type": "uri",
-                                                  "label": "action",
-                                                  "uri": "https://hocom.tw/h/Album?key=qv8dg&set=15&cat=116092"
-                                                },
-                                                "contents": [
-                                                  { "type": "text", "text": "CNC 數位木作", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }
-                                                ]
-                                              },
-                                              {
-                                                "type": "box",
-                                                "layout": "vertical",
-                                                "flex": 1,
-                                                "backgroundColor": "#F4F7FF",
-                                                "cornerRadius": "md",
-                                                "paddingAll": "10px",
-                                                "action": {
-                                                  "type": "uri",
-                                                  "label": "action",
-                                                  "uri": "https://hocom.tw/h/AlbumDetail?key=qv8dg&cont=487400"
-                                                },
-                                                "contents": [
-                                                  { "type": "text", "text": "LOGO 製作", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }
-                                                ]
-                                              }
+                                              { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#F4F7FF", "cornerRadius": "md", "paddingAll": "10px", "action": { "type": "uri", "label": "action", "uri": "https://hocom.tw/h/Album?key=qv8dg&set=15&cat=116092" }, "contents": [{ "type": "text", "text": "CNC 數位木作", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }] },
+                                              { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#F4F7FF", "cornerRadius": "md", "paddingAll": "10px", "action": { "type": "uri", "label": "action", "uri": "https://hocom.tw/h/AlbumDetail?key=qv8dg&cont=487400" }, "contents": [{ "type": "text", "text": "LOGO 製作", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }] }
                                             ]
                                           },
                                           {
@@ -113,38 +69,8 @@
                                             "layout": "horizontal",
                                             "spacing": "sm",
                                             "contents": [
-                                              {
-                                                "type": "box",
-                                                "layout": "vertical",
-                                                "flex": 1,
-                                                "backgroundColor": "#F4F7FF",
-                                                "cornerRadius": "md",
-                                                "paddingAll": "10px",
-                                                "action": {
-                                                  "type": "uri",
-                                                  "label": "action",
-                                                  "uri": "https://hocom.tw/h/AlbumDetail?key=qv8dg&cont=487395"
-                                                },
-                                                "contents": [
-                                                  { "type": "text", "text": "遊艇裝潢", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }
-                                                ]
-                                              },
-                                              {
-                                                "type": "box",
-                                                "layout": "vertical",
-                                                "flex": 1,
-                                                "backgroundColor": "#F4F7FF",
-                                                "cornerRadius": "md",
-                                                "paddingAll": "10px",
-                                                "action": {
-                                                  "type": "uri",
-                                                  "label": "action",
-                                                  "uri": "https://hocom.tw/h/Album?key=qv8dg&set=15&cat=116096"
-                                                },
-                                                "contents": [
-                                                  { "type": "text", "text": "住家裝潢", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }
-                                                ]
-                                              }
+                                              { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#F4F7FF", "cornerRadius": "md", "paddingAll": "10px", "action": { "type": "uri", "label": "action", "uri": "https://hocom.tw/h/AlbumDetail?key=qv8dg&cont=487395" }, "contents": [{ "type": "text", "text": "遊艇裝潢", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }] },
+                                              { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#F4F7FF", "cornerRadius": "md", "paddingAll": "10px", "action": { "type": "uri", "label": "action", "uri": "https://hocom.tw/h/Album?key=qv8dg&set=15&cat=116096" }, "contents": [{ "type": "text", "text": "住家裝潢", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }] }
                                             ]
                                           },
                                           {
@@ -152,38 +78,8 @@
                                             "layout": "horizontal",
                                             "spacing": "sm",
                                             "contents": [
-                                              {
-                                                "type": "box",
-                                                "layout": "vertical",
-                                                "flex": 1,
-                                                "backgroundColor": "#F4F7FF",
-                                                "cornerRadius": "md",
-                                                "paddingAll": "10px",
-                                                "action": {
-                                                  "type": "uri",
-                                                  "label": "action",
-                                                  "uri": "https://hocom.tw/h/albumDetail?key=qv8dg&cont=487399"
-                                                },
-                                                "contents": [
-                                                  { "type": "text", "text": "商空建案", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }
-                                                ]
-                                              },
-                                              {
-                                                "type": "box",
-                                                "layout": "vertical",
-                                                "flex": 1,
-                                                "backgroundColor": "#F4F7FF",
-                                                "cornerRadius": "md",
-                                                "paddingAll": "10px",
-                                                "action": {
-                                                  "type": "uri",
-                                                  "label": "action",
-                                                  "uri": "https://hocom.tw/h/Album?key=qv8dg&set=15&cat=116098"
-                                                },
-                                                "contents": [
-                                                  { "type": "text", "text": "訂製家具", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }
-                                                ]
-                                              }
+                                              { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#F4F7FF", "cornerRadius": "md", "paddingAll": "10px", "action": { "type": "uri", "label": "action", "uri": "https://hocom.tw/h/albumDetail?key=qv8dg&cont=487399" }, "contents": [{ "type": "text", "text": "商空建案", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }] },
+                                              { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#F4F7FF", "cornerRadius": "md", "paddingAll": "10px", "action": { "type": "uri", "label": "action", "uri": "https://hocom.tw/h/Album?key=qv8dg&set=15&cat=116098" }, "contents": [{ "type": "text", "text": "訂製家具", "size": "xs", "color": "#4A5EB3", "align": "center", "weight": "bold" }] }
                                             ]
                                           }
                                         ]
@@ -198,13 +94,7 @@
                                           { "type": "text", "text": "■ 連絡資訊", "weight": "bold", "size": "xs" },
                                           { "type": "text", "text": "電話：0917-801-768", "size": "xxs", "color": "#555555" },
                                           { "type": "text", "text": "■ 代表性客戶", "weight": "bold", "size": "xs", "margin": "md" },
-                                          {
-                                            "type": "text",
-                                            "text": "呷尚寶全台連鎖早餐店、屏東社福館、壽山動物園、香蕉碼頭、義大醫院、義享二館、高雄鳥松基督摩門聖殿、高雄鳥松法鼓山紫雲寺",
-                                            "size": "xxs",
-                                            "color": "#555555",
-                                            "wrap": true
-                                          }
+                                          { "type": "text", "text": "呷尚寶全台連鎖早餐店、屏東社福館、壽山動物園、香蕉碼頭、義大醫院、義享二館、高雄鳥松基督摩門聖殿、高雄鳥松法鼓山紫雲寺", "size": "xxs", "color": "#555555", "wrap": true }
                                         ]
                                       }
                                     ]
@@ -222,15 +112,19 @@
                                 }
                             }
                         ]);
+
                         if (result) {
-                            liff.closeWindow(); 
+                            liff.closeWindow(); // 分享完後自動關閉頁面
                         } else {
-                            liff.closeWindow();
+                            liff.closeWindow(); // 取消分享也關閉
                         }
-                    } catch (error) {
-                        console.error("分享失敗", error);
+                    } else {
+                        alert("請在 LINE App 內開啟此連結以使用分享功能。");
                     }
                 }
+            } catch (error) {
+                console.error("LIFF 初始化或分享失敗", error);
+                alert("錯誤：" + error.message);
             }
         }
         main();
