@@ -1,152 +1,184 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>數位名片分享中...</title>
+    <title>分享名片</title>
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
-            color: #333;
-        }
-        .container { text-align: center; padding: 20px; }
-        .status { margin-top: 15px; font-size: 14px; color: #888; }
-        /* 簡單的載入動畫 */
-        .spinner {
-            width: 40px; height: 40px; border: 4px solid #f3f3f3;
-            border-top: 4px solid #4A5EB3; border-radius: 50%;
-            animation: spin 1s linear infinite; margin: 0 auto;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="spinner"></div>
-        <p id="message">正在啟動 LINE 分享介面...</p>
-        <p id="debug" class="status">準備中...</p>
-    </div>
+    <h2 style="text-align: center; margin-top: 50px;">正在開啟分享功能...</h2>
 
     <script>
-        const debugTag = document.getElementById('debug');
-        const msgTag = document.getElementById('message');
-
-        function updateStatus(msg) {
-            debugTag.innerText = msg;
-            console.log(msg);
-        }
-
         async function main() {
-            try {
-                updateStatus("正在初始化 LIFF...");
-                await liff.init({ liffId: "2009645313-UnbMhqtt" });
+            // 1. 初始化 LIFF
+            await liff.init({ liffId: "2009645313-UnbMhqtt" });
 
-                updateStatus("檢查登入狀態...");
-                if (!liff.isLoggedIn()) {
-                    updateStatus("尚未登入，跳轉登入畫面...");
-                    liff.login();
-                } else {
-                    updateStatus("檢查分享權限...");
-                    if (liff.isApiAvailable('shareTargetPicker')) {
-                        updateStatus("正在開啟好友清單...");
-                        
+            // 2. 檢查是否登入
+            if (!liff.isLoggedIn()) {
+                liff.login();
+            } else {
+                // 3. 執行分享動作 (ShareTargetPicker)
+                if (liff.isApiAvailable('shareTargetPicker')) {
+                    try {
                         const result = await liff.shareTargetPicker([
                             {
                                 "type": "flex",
-                                "altText": "您收到一張張盛傑的數位名片",
-                                "contents": {
-                                    "type": "bubble",
-                                    "size": "mega",
-                                    "hero": {
-                                        "type": "image",
-                                        "url": "https://i.imgur.com/uM9yYfE.png",
-                                        "size": "full",
-                                        "aspectRatio": "3:4",
-                                        "aspectMode": "cover"
-                                    },
-                                    "body": {
-                                        "type": "box",
-                                        "layout": "vertical",
-                                        "contents": [
-                                            { "type": "text", "text": "天揚有限公司 / 展盛工程行", "weight": "bold", "color": "#4A5EB3", "size": "sm", "align": "center" },
-                                            { "type": "text", "text": "張盛傑", "weight": "bold", "size": "xl", "margin": "md", "align": "center" },
-                                            { "type": "text", "text": "數位匠心木作，溝通造就工藝，成就非凡", "size": "xxs", "color": "#8C8C8C", "align": "center", "margin": "sm" },
-                                            {
-                                                "type": "box",
-                                                "layout": "horizontal",
-                                                "margin": "lg",
-                                                "spacing": "sm",
-                                                "contents": [
-                                                    { "type": "box", "layout": "vertical", "contents": [{"type": "text", "text": "CNC 木工", "size": "xxs", "color": "#4A5EB3", "align": "center"}], "backgroundColor": "#E8EDFF", "cornerRadius": "xxl", "paddingAll": "4px", "flex": 1 },
-                                                    { "type": "box", "layout": "vertical", "contents": [{"type": "text", "text": "LOGO 製作", "size": "xxs", "color": "#4A5EB3", "align": "center"}], "backgroundColor": "#E8EDFF", "cornerRadius": "xxl", "paddingAll": "4px", "flex": 1 },
-                                                    { "type": "box", "layout": "vertical", "contents": [{"type": "text", "text": "鋼構平台", "size": "xxs", "color": "#4A5EB3", "align": "center"}], "backgroundColor": "#E8EDFF", "cornerRadius": "xxl", "paddingAll": "4px", "flex": 1 }
-                                                ]
-                                            },
-                                            {
-                                                "type": "box",
-                                                "layout": "horizontal",
-                                                "margin": "sm",
-                                                "spacing": "sm",
-                                                "contents": [
-                                                    { "type": "box", "layout": "vertical", "contents": [{"type": "text", "text": "老屋翻修", "size": "xxs", "color": "#4A5EB3", "align": "center"}], "backgroundColor": "#E8EDFF", "cornerRadius": "xxl", "paddingAll": "4px", "flex": 1 },
-                                                    { "type": "box", "layout": "vertical", "contents": [{"type": "text", "text": "統包工程", "size": "xxs", "color": "#4A5EB3", "align": "center"}], "backgroundColor": "#E8EDFF", "cornerRadius": "xxl", "paddingAll": "4px", "flex": 1 }
-                                                ],
-                                                "paddingStart": "40px", "paddingEnd": "40px"
-                                            },
-                                            { "type": "separator", "margin": "xl" },
-                                            {
-                                                "type": "box",
-                                                "layout": "vertical",
-                                                "margin": "lg",
-                                                "spacing": "xs",
-                                                "contents": [
-                                                    { "type": "text", "text": "■ 聯繫資訊", "weight": "bold", "size": "xs" },
-                                                    { "type": "text", "text": "・電話：0938-368-711", "size": "xxs", "color": "#555555" },
-                                                    { "type": "text", "text": "・E-mail：cbambooc4530@gmail.com", "size": "xxs", "color": "#555555" },
-                                                    { "type": "text", "text": "■ BNI：高雄中心區富源分會", "size": "xxs", "color": "#555555" },
-                                                    { "type": "text", "text": "■ 代表性客戶", "size": "xxs", "color": "#555555" },
-                                                    { "type": "text", "text": "・好市多.漢神.大立百貨.迪卡儂.衛武營", "size": "xxs", "color": "#555555" }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "footer": {
+                                "altText": "您收到一張張盛傑的電子名片",
+                                "contents": 
+                                // --- 這裡放你剛才給我的那段 JSON ---
+                                {
+                                  "type": "bubble",
+                                  "size": "mega",
+                                  "hero": {
+                                    "type": "image",
+                                    "url": "https://i.imgur.com/uM9yYfE.png",
+                                    "size": "full",
+                                    "aspectRatio": "3:4",
+                                    "aspectMode": "cover"
+                                  },
+                                  "body": {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "contents": [
+                                      {
+                                        "type": "text",
+                                        "text": "天揚有限公司 / 展盛工程行",
+                                        "weight": "bold",
+                                        "color": "#4A5EB3",
+                                        "size": "sm",
+                                        "align": "center"
+                                      },
+                                      {
+                                        "type": "text",
+                                        "text": "張盛傑",
+                                        "weight": "bold",
+                                        "size": "xl",
+                                        "margin": "md",
+                                        "align": "center"
+                                      },
+                                      {
+                                        "type": "text",
+                                        "text": "數位匠心木作，溝通造就工藝，成就非凡",
+                                        "size": "xxs",
+                                        "color": "#8C8C8C",
+                                        "align": "center",
+                                        "margin": "sm"
+                                      },
+                                      {
                                         "type": "box",
                                         "layout": "horizontal",
+                                        "margin": "lg",
                                         "spacing": "sm",
                                         "contents": [
-                                            { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "Line", "uri": "https://line.me/R/ti/p/@439roerh" } },
-                                            { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "介紹", "uri": "https://ty.ipe.tw/" } },
-                                            { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "分享", "uri": "https://liff.line.me/2009645313-UnbMhqtt" } }
+                                          {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            "contents": [
+                                              { "type": "text", "text": "CNC 木工", "size": "xxs", "color": "#4A5EB3", "align": "center" }
+                                            ],
+                                            "backgroundColor": "#E8EDFF",
+                                            "cornerRadius": "xxl",
+                                            "paddingAll": "4px",
+                                            "flex": 1
+                                          },
+                                          {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            "contents": [
+                                              { "type": "text", "text": "LOGO 製作", "size": "xxs", "color": "#4A5EB3", "align": "center" }
+                                            ],
+                                            "backgroundColor": "#E8EDFF",
+                                            "cornerRadius": "xxl",
+                                            "paddingAll": "4px",
+                                            "flex": 1
+                                          },
+                                          {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            "contents": [
+                                              { "type": "text", "text": "鋼構平台", "size": "xxs", "color": "#4A5EB3", "align": "center" }
+                                            ],
+                                            "backgroundColor": "#E8EDFF",
+                                            "cornerRadius": "xxl",
+                                            "paddingAll": "4px",
+                                            "flex": 1
+                                          }
                                         ]
-                                    }
+                                      },
+                                      {
+                                        "type": "box",
+                                        "layout": "horizontal",
+                                        "margin": "sm",
+                                        "spacing": "sm",
+                                        "contents": [
+                                          {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            "contents": [
+                                              { "type": "text", "text": "老屋翻修", "size": "xxs", "color": "#4A5EB3", "align": "center" }
+                                            ],
+                                            "backgroundColor": "#E8EDFF",
+                                            "cornerRadius": "xxl",
+                                            "paddingAll": "4px",
+                                            "flex": 1
+                                          },
+                                          {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            "contents": [
+                                              { "type": "text", "text": "統包工程", "size": "xxs", "color": "#4A5EB3", "align": "center" }
+                                            ],
+                                            "backgroundColor": "#E8EDFF",
+                                            "cornerRadius": "xxl",
+                                            "paddingAll": "4px",
+                                            "flex": 1
+                                          }
+                                        ],
+                                        "paddingStart": "40px",
+                                        "paddingEnd": "40px"
+                                      },
+                                      { "type": "separator", "margin": "xl" },
+                                      {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "margin": "lg",
+                                        "spacing": "xs",
+                                        "contents": [
+                                          { "type": "text", "text": "■ 聯繫資訊", "weight": "bold", "size": "xs" },
+                                          { "type": "text", "text": "・電話：0938-368-711", "size": "xxs", "color": "#555555" },
+                                          { "type": "text", "text": "・E-mail：cbambooc4530@gmail.com", "size": "xxs", "color": "#555555" },
+                                          { "type": "text", "text": "■ BNI：高雄中心區富源分會", "size": "xxs", "color": "#555555" },
+                                          { "type": "text", "text": "■ 代表性客戶", "size": "xxs", "color": "#555555" },
+                                          { "type": "text", "text": "・好市多.漢神.大立百貨.迪卡儂.衛武營", "size": "xxs", "color": "#555555" }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "footer": {
+                                    "type": "box",
+                                    "layout": "horizontal",
+                                    "spacing": "sm",
+                                    "contents": [
+                                      { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "Line", "uri": "https://line.me/R/ti/p/@439roerh" } },
+                                      { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "介紹", "uri": "https://ty.ipe.tw/" } },
+                                      { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "分享", "uri": "https://liff.line.me/2009645313-UnbMhqtt" } }
+                                    ]
+                                  }
                                 }
+                                // --- JSON 結束 ---
                             }
                         ]);
-
                         if (result) {
-                            updateStatus("分享成功！即將關閉...");
-                            setTimeout(() => { liff.closeWindow(); }, 1000);
+                            alert("分享成功！");
+                            liff.closeWindow(); // 分享完自動關閉視窗
                         } else {
-                            updateStatus("您取消了分享。");
-                            setTimeout(() => { liff.closeWindow(); }, 1500);
+                            liff.closeWindow();
                         }
-                    } else {
-                        msgTag.innerText = "不支援分享";
-                        updateStatus("請確保在 LINE 應用程式內開啟此連結，且已開啟 Share Target Picker 權限。");
+                    } catch (error) {
+                        console.error("分享失敗", error);
                     }
                 }
-            } catch (error) {
-                msgTag.innerText = "發生錯誤";
-                updateStatus("錯誤代碼：" + error.message);
-                console.error(error);
             }
         }
         main();
